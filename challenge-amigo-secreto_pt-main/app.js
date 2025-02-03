@@ -1,32 +1,34 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const inputAmigo = document.getElementById("amigo");
-    const listaAmigos = document.getElementById("listaAmigos");
-    const resultado = document.getElementById("resultado");
+document.addEventListener("DOMContentLoaded", function() {
     let amigos = [];
+    let inputAmigo = document.getElementById("amigo");
+    let listaAmigos = document.getElementById("listaAmigos");
+    let resultado = document.getElementById("resultado");
 
-    window.adicionarAmigo = function () {
-        const nome = inputAmigo.value.trim();
-        if (nome && !amigos.includes(nome)) {
+    function adicionarAmigo() {
+        let nome = inputAmigo.value.trim();
+        if (nome !== "" && !amigos.includes(nome)) {
             amigos.push(nome);
-            atualizarLista();
+            mostrarLista();
             inputAmigo.value = "";
         }
-    };
-
-    function atualizarLista() {
-        listaAmigos.innerHTML = "";
-        amigos.forEach(nome => {
-            const li = document.createElement("li");
-            li.textContent = nome;
-            listaAmigos.appendChild(li);
-        });
     }
 
-    window.sortearAmigo = function () {
-        if (amigos.length > 0) {
-            const indice = Math.floor(Math.random() * amigos.length);
-            const sorteado = amigos[indice];
-            resultado.innerHTML = `<li class="sorteado">Amigo Secreto: ${sorteado}</li>`;
+    function mostrarLista() {
+        listaAmigos.innerHTML = "";
+        for (let i = 0; i < amigos.length; i++) {
+            let item = document.createElement("li");
+            item.textContent = amigos[i];
+            listaAmigos.appendChild(item);
         }
-    };
+    }
+
+    function sortearAmigo() {
+        if (amigos.length > 0) {
+            let indiceSorteado = Math.floor(Math.random() * amigos.length);
+            resultado.innerHTML = "<li>Amigo Secreto: " + amigos[indiceSorteado] + "</li>";
+        }
+    }
+
+    window.adicionarAmigo = adicionarAmigo;
+    window.sortearAmigo = sortearAmigo;
 });
